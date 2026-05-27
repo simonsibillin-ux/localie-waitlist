@@ -855,7 +855,7 @@ window.submitCustomer = async function() {
     showSuccess(cap(name.split(' ')[0]), false);
   } else if (error.code === '23505') {
     setLoading(btn, false, '<i class="ti ti-arrow-right" style="font-size:16px"></i> Join the waitlist');
-    document.getElementById('customerEmail').style.borderColor = 'var(--gold)';
+    document.getElementById('customerEmail').style.borderColor = '#c0392b';
     document.getElementById('customerEmail').value = '';
     document.getElementById('customerEmail').placeholder = "You're already on the list!";
   } else {
@@ -881,7 +881,7 @@ window.submitProvider = async function() {
     showSuccess(cap(name.split(' ')[0]), true);
   } else if (error.code === '23505') {
     setLoading(btn, false, '<i class="ti ti-arrow-right" style="font-size:16px"></i> Register my interest');
-    document.getElementById('providerEmail').style.borderColor = 'var(--gold)';
+    document.getElementById('providerEmail').style.borderColor = '#c0392b';
     document.getElementById('providerEmail').value = '';
     document.getElementById('providerEmail').placeholder = "Already registered!";
   } else {
