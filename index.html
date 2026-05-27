@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#0a1628">
 <title>Localie — Trusted Local Services, Coming Soon</title>
 <meta name="description" content="Localie is a curated marketplace of trusted local service providers — every single one independently verified. Join the waitlist today.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -172,32 +172,67 @@ section {
 }
 
 .type-card {
-  background: rgba(255,255,255,0.04);
-  border: 1.5px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 24px 20px;
+  border-radius: 22px;
+  padding: 2px;
   cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+  transition: transform 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.type-card:hover { transform: translateY(-4px); }
+.type-card.active-customer { transform: translateY(-4px); }
+.type-card.active-provider { transform: translateY(-4px); }
+
+.type-card-customer { background: linear-gradient(140deg, #4a9eff, #1a6bdf, #0d2d6a); }
+.type-card-provider { background: linear-gradient(140deg, #f5a623, #e08a00, #7a4a00); }
+
+.type-card-inner {
+  background: #0d1f3c;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.type-card-body {
+  padding: 28px 22px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  -webkit-tap-highlight-color: transparent;
+  gap: 14px;
+  text-align: center;
 }
-.type-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
-.type-card.active-customer { background: rgba(26,107,223,0.15); border-color: var(--blue-light); }
-.type-card.active-provider { background: rgba(245,166,35,0.12); border-color: var(--gold); }
 
 .type-icon {
-  width: 48px; height: 48px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
 }
-.type-icon.customer { background: rgba(26,107,223,0.2); color: var(--blue-light); }
-.type-icon.provider { background: rgba(245,166,35,0.2); color: var(--gold); }
+.type-icon.customer { background: rgba(74,158,255,0.15); color: var(--blue-light); border: 1px solid rgba(74,158,255,0.2); }
+.type-icon.provider { background: rgba(245,166,35,0.12); color: var(--gold); border: 1px solid rgba(245,166,35,0.2); }
 
-.type-title { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--white); line-height: 1.2; }
-.type-desc { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+.type-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.type-desc { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.6; }
+
+.type-card-footer {
+  padding: 13px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.type-card-customer .type-card-footer { background: rgba(74,158,255,0.1); color: var(--blue-light); border-top: 1px solid rgba(74,158,255,0.12); }
+.type-card-provider .type-card-footer { background: rgba(245,166,35,0.08); color: var(--gold); border-top: 1px solid rgba(245,166,35,0.1); }
 
 /* FORMS */
 .form-wrap {
@@ -498,9 +533,9 @@ footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
 @media (max-width: 640px) {
   .forwho-grid { grid-template-columns: 1fr; }
   .type-selector { gap: 10px; }
-  .type-card { padding: 18px 14px; }
-  .type-title { font-size: 13px; }
-  .type-icon { width: 40px; height: 40px; font-size: 18px; }
+  .type-card-body { padding: 20px 16px 16px; gap: 10px; }
+  .type-title { font-size: 14px; }
+  .type-icon { width: 44px; height: 44px; font-size: 20px; }
   .why-grid { grid-template-columns: 1fr 1fr; }
   .forwho-card { padding: 24px 20px; }
 }
@@ -542,15 +577,35 @@ footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
 
   <!-- TYPE SELECTOR -->
   <div class="type-selector" id="typeSelector">
-    <div class="type-card" id="cardCustomer" onclick="selectType('customer')">
-      <div class="type-icon customer"><i class="ti ti-search"></i></div>
-      <div class="type-title">I'm looking for a tradie</div>
-      <div class="type-desc">Find trusted, verified locals near you</div>
+    <div class="type-card type-card-customer" id="cardCustomer" onclick="selectType('customer')">
+      <div class="type-card-inner">
+        <div class="type-card-body">
+          <div class="type-icon customer"><i class="ti ti-search" aria-hidden="true"></i></div>
+          <div>
+            <div class="type-title">I'm looking for a tradie</div>
+            <div class="type-desc" style="margin-top:8px">Find trusted, verified locals near you</div>
+          </div>
+        </div>
+        <div class="type-card-footer">
+          <i class="ti ti-arrow-right" style="font-size:13px" aria-hidden="true"></i>
+          Join the waitlist
+        </div>
+      </div>
     </div>
-    <div class="type-card" id="cardProvider" onclick="selectType('provider')">
-      <div class="type-icon provider"><i class="ti ti-building"></i></div>
-      <div class="type-title">I run a local business</div>
-      <div class="type-desc">Get discovered by locals actively looking</div>
+    <div class="type-card type-card-provider" id="cardProvider" onclick="selectType('provider')">
+      <div class="type-card-inner">
+        <div class="type-card-body">
+          <div class="type-icon provider"><i class="ti ti-building" aria-hidden="true"></i></div>
+          <div>
+            <div class="type-title">I run a local business</div>
+            <div class="type-desc" style="margin-top:8px">Get discovered by locals actively looking</div>
+          </div>
+        </div>
+        <div class="type-card-footer">
+          <i class="ti ti-arrow-right" style="font-size:13px" aria-hidden="true"></i>
+          Register my interest
+        </div>
+      </div>
     </div>
   </div>
 
@@ -740,8 +795,8 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 // ── TYPE SELECTOR ──────────────────────────────────────────────────────────
 window.selectType = function(type) {
-  document.getElementById('cardCustomer').className = 'type-card' + (type === 'customer' ? ' active-customer' : '');
-  document.getElementById('cardProvider').className = 'type-card' + (type === 'provider' ? ' active-provider' : '');
+  document.getElementById('cardCustomer').className = 'type-card type-card-customer';
+  document.getElementById('cardProvider').className = 'type-card type-card-provider';
   document.getElementById('customerForm').classList.toggle('visible', type === 'customer');
   document.getElementById('providerForm').classList.toggle('visible', type === 'provider');
   setTimeout(() => {
