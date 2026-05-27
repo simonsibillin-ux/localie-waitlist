@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a1628">
+<title>You're in — Localie</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0d2d6a; --blue: #1a6bdf; --blue-light: #4a9eff;
+  --dark: #0a1628; --gold: #f5a623; --white: #ffffff;
+}
+html, body {
+  height: 100%;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bg-glow {
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(26,107,223,0.1) 0%, transparent 65%);
+  pointer-events: none; z-index: 0;
+}
+
+.page {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px 32px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-bottom: 48px;
+}
+.logo img { height: 38px; width: 38px; border-radius: 11px; object-fit: cover; }
+.logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--white); }
+.logo-text em { color: var(--blue-light); font-style: normal; }
+
+/* ANIMATED CHECK */
+.check-wrap {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: rgba(26,107,223,0.12);
+  border: 2px solid rgba(74,158,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+.check-wrap i { font-size: 44px; color: var(--blue-light); }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* PULSE RING */
+.check-wrap::after {
+  content: '';
+  position: absolute;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  border: 2px solid rgba(74,158,255,0.2);
+  animation: pulse 2s ease-out 0.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* TEXT */
+.title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 6vw, 52px);
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+.title em { color: var(--blue-light); font-style: normal; }
+
+.subtitle {
+  font-size: clamp(14px, 2vw, 17px);
+  color: rgba(255,255,255,0.45);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 44px;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 48px;
+  animation: fadeUp 0.5s ease 0.4s both;
+}
+
+.btn-primary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 50px;
+  background: var(--blue);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+.btn-instagram {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-instagram:hover { background: rgba(255,255,255,0.08); color: var(--white); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
+
+.btn-share {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 50px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-share:hover { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
+
+/* SHARE CONFIRMATION */
+.share-confirm {
+  font-size: 12px;
+  color: var(--blue-light);
+  margin-top: -4px;
+  display: none;
+  animation: fadeUp 0.2s ease both;
+}
+
+/* DIVIDER */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  color: rgba(255,255,255,0.15);
+  font-size: 12px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* BACK LINK */
+.back-link {
+  font-size: 13px;
+  color: rgba(255,255,255,0.25);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+  animation: fadeUp 0.5s ease 0.5s both;
+}
+.back-link:hover { color: rgba(255,255,255,0.5); }
+
+/* FOOTER */
+.footer {
+  position: absolute;
+  bottom: 24px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.15);
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .logo { margin-bottom: 36px; }
+  .check-wrap { width: 80px; height: 80px; margin-bottom: 24px; }
+  .check-wrap i { font-size: 36px; }
+  .check-wrap::after { width: 80px; height: 80px; }
+  .actions { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<div class="page">
+
+  <a href="index.html" class="logo">
+    <img src="https://localie-sigma.vercel.app/images/logo.png" alt="Localie">
+    <div class="logo-text">Local<em>ie</em></div>
+  </a>
+
+  <div class="check-wrap" style="position:relative">
+    <i class="ti ti-check" aria-hidden="true"></i>
+  </div>
+
+  <h1 class="title">You're on the list,<br><em id="firstName">friend</em>.</h1>
+
+  <p class="subtitle" id="subtitle">
+    We'll be in touch the moment Localie launches near you. Keep an eye on your inbox — it'll be worth the wait.
+  </p>
+
+  <div class="actions">
+    <a href="https://www.instagram.com/localie.app" target="_blank" class="btn-instagram">
+      <i class="ti ti-brand-instagram" style="font-size:18px" aria-hidden="true"></i>
+      Follow us on Instagram
+    </a>
+
+    <div class="divider">or</div>
+
+    <button class="btn-share" onclick="handleShare()">
+      <i class="ti ti-share" style="font-size:16px" aria-hidden="true"></i>
+      Share with a friend
+    </button>
+    <div class="share-confirm" id="shareConfirm">
+      <i class="ti ti-check" style="font-size:12px" aria-hidden="true"></i>
+      Link copied to clipboard!
+    </div>
+
+    <a href="mailto:admin@localieapp.com" class="btn-share" style="margin-top:4px">
+      <i class="ti ti-mail" style="font-size:16px" aria-hidden="true"></i>
+      Get in touch
+    </a>
+  </div>
+
+  <a href="index.html" class="back-link">
+    <i class="ti ti-arrow-left" style="font-size:15px" aria-hidden="true"></i>
+    Back to Localie
+  </a>
+
+  <div class="footer">© 2026 Localie</div>
+
+</div>
+
+<script>
+  // Personalise with name from URL param or sessionStorage
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('name') || sessionStorage.getItem('localie_name') || '';
+  const isProvider = params.get('type') === 'provider' || sessionStorage.getItem('localie_type') === 'provider';
+
+  if (name) {
+    const firstName = name.split(' ')[0];
+    const cap = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+    document.getElementById('firstName').textContent = cap;
+    if (isProvider) {
+      document.getElementById('subtitle').textContent = "We'll personally reach out when we're ready to onboard providers in your area. Keep an eye on your inbox — exciting things are coming.";
+    }
+  }
+
+  // Share function
+  function handleShare() {
+    const url = 'https://localieapp.com';
+    const text = "I just joined the Localie waitlist — trusted local services, all in one place. Check it out:";
+    if (navigator.share) {
+      navigator.share({ title: 'Localie', text, url }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(url + ' — ' + text).then(() => {
+        const confirm = document.getElementById('shareConfirm');
+        confirm.style.display = 'block';
+        setTimeout(() => { confirm.style.display = 'none'; }, 3000);
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

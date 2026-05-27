@@ -852,7 +852,9 @@ window.submitCustomer = async function() {
   setLoading(btn, true);
   const { error } = await sb.from('waitlist').insert([{ full_name: name, email, type: 'customer', created_at: new Date().toISOString() }]);
   if (!error) {
-    showSuccess(cap(name.split(' ')[0]), false);
+    sessionStorage.setItem('localie_name', name);
+    sessionStorage.setItem('localie_type', 'customer');
+    window.location.href = 'thankyou.html?name=' + encodeURIComponent(name) + '&type=customer';
   } else if (error.code === '23505') {
     setLoading(btn, false, '<i class="ti ti-arrow-right" style="font-size:16px"></i> Join the waitlist');
     document.getElementById('customerEmail').style.borderColor = '#c0392b';
@@ -878,7 +880,9 @@ window.submitProvider = async function() {
   setLoading(btn, true);
   const { error } = await sb.from('provider_waitlist').insert([{ full_name: name, business_name: biz, category, email, phone: phone || null, created_at: new Date().toISOString() }]);
   if (!error) {
-    showSuccess(cap(name.split(' ')[0]), true);
+    sessionStorage.setItem('localie_name', name);
+    sessionStorage.setItem('localie_type', 'provider');
+    window.location.href = 'thankyou.html?name=' + encodeURIComponent(name) + '&type=provider';
   } else if (error.code === '23505') {
     setLoading(btn, false, '<i class="ti ti-arrow-right" style="font-size:16px"></i> Register my interest');
     document.getElementById('providerEmail').style.borderColor = '#c0392b';
